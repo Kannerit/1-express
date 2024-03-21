@@ -1,0 +1,22 @@
+<div class="container">
+  <h2>Users List</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Website</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each users}}
+        <tr>
+          <td>{{user.name}}</td>
+          <td>{{user.address}}</td>
+          <td>{{#if website}}{{user.website}}{{else}}N/A{{/if}}</td>
+        </tr>
+      {{/each}}
+    </tbody>
+  </table>
+
+</div>
