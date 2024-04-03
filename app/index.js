@@ -1,6 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const tableRouter = require('./router/tableRouter')
+const tableRouter = require("./router/tableRouter");
 const hbs = require("express-handlebars");
 
 const app = express();
@@ -17,37 +17,37 @@ mongoose
 
 const User = require("./models/UserModel");
 
-
-
 app.engine("hbs", hbs.engine({ extname: ".hbs" }));
 app.set("view engine", "hbs");
 
-app.get('/', (req,res) => {
-  res.send('Welcome to the App :)!')
-})
-
-app.use('/users', tableRouter);
+// app.get("/", (req, res) => {
+//   res.send("Welcome to the App :)!");
+// });
 
 app.get("/mongoose", function (req, res) {
-  User.find()
+  User.find().lean()
     .then((users) => {
       console.log(users);
-      res.render("home", {users});
+      res.render("home", { users: users });
     })
     .catch((err) => {
       res.send(err);
     });
 });
 
-app.get("/", (_req, res) => {
-  res.render("home", {
-    title: "My app title",
-    content: "Lorem ipsum",
-  });
+app.get("/", (req, res) => {
+  User.find().lean()
+    .then((users) => {
+      console.log(users);
+      res.render("home", { users: users });
+    })
+    .catch((err) => {
+      res.send(err);
+    });
 });
 
 /* Routes */
-app.use("/users", tableRouter);
+app.use("/", tableRouter);
 
 app.listen(PORT, () => {
   console.log("We're on port 1100 :D");
